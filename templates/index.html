@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explainability Score Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Explainability Score Calculator</h1>
+        <form action="/calculate" method="POST">
+            <div class="form-group">
+                <label for="title">AI System Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            
+            <h2>Fairness Assessment</h2>
+            <div class="form-group">
+                <label for="demographic_parity">Score for Demographic Parity (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="demographic_parity" name="demographic_parity" required>
+            </div>
+            <div class="form-group">
+                <label for="equal_opportunity">Score for Equal Opportunity (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="equal_opportunity" name="equal_opportunity" required>
+            </div>
+            <div class="form-group">
+                <label for="disparate_impact">Score for Absence of Disparate Impact (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="disparate_impact" name="disparate_impact" required>
+            </div>
+            
+            <h2>Accountability Assessment</h2>
+            <div class="form-group">
+                <label for="documentation_practices">Score for Documentation Practices (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="documentation_practices" name="documentation_practices" required>
+            </div>
+            <div class="form-group">
+                <label for="auditability">Score for Auditability (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="auditability" name="auditability" required>
+            </div>
+            <div class="form-group">
+                <label for="ethical_compliance">Score for Compliance with Ethical Guidelines (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="ethical_compliance" name="ethical_compliance" required>
+            </div>
+
+            <h2>Transparency Assessment</h2>
+            <div class="form-group">
+                <label for="explainability">Score for Explainability (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="explainability" name="explainability" required>
+            </div>
+            <div class="form-group">
+                <label for="ui_design">Score for User Interface Design (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="ui_design" name="ui_design" required>
+            </div>
+            <div class="form-group">
+                <label for="decision_doc">Score for Decision-making Documentation (0-5):</label>
+                <input type="number" step="0.1" min="0" max="5" class="form-control" id="decision_doc" name="decision_doc" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Calculate</button>
+        </form>
+        <hr>
+        <a href="/results" class="btn btn-secondary">View Stored Scores</a>
+    </div>
+</body>
+</html>

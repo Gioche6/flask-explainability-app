@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #radial-graph {
+            height: 500px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Score Details: {{ row[1] }}</h1>
+        <div id="radial-graph">
+            {{ row[11]|safe }}
+        </div>
+        <table class="table table-striped mt-4">
+            <tr>
+                <th>Demographic Parity</th>
+                <td>{{ row[2] }}</td>
+            </tr>
+            <tr>
+                <th>Equal Opportunity</th>
+                <td>{{ row[3] }}</td>
+            </tr>
+            <tr>
+                <th>Absence of Disparate Impact</th>
+                <td>{{ row[4] }}</td>
+            </tr>
+            <tr>
+                <th>Documentation Practices</th>
+                <td>{{ row[5] }}</td>
+            </tr>
+            <tr>
+                <th>Auditability</th>
+                <td>{{ row[6] }}</td>
+            </tr>
+            <tr>
+                <th>Compliance with Ethical Guidelines</th>
+                <td>{{ row[7] }}</td>
+            </tr>
+            <tr>
+                <th>Explainability</th>
+                <td>{{ row[8] }}</td>
+            </tr>
+            <tr>
+                <th>User Interface Design</th>
+                <td>{{ row[9] }}</td>
+            </tr>
+            <tr>
+                <th>Decision-making Documentation</th>
+                <td>{{ row[10] }}</td>
+            </tr>
+        </table>
+        <a href="/results" class="btn btn-secondary mt-3">Go Back</a>
+    </div>
+</body>
+</html>
