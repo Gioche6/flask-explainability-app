@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import plotly.graph_objs as go
 import plotly.io as pio
+import os
 
 app = Flask(__name__)
 
