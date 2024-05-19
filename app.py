@@ -6,26 +6,25 @@ import plotly.io as pio
 app = Flask(__name__)
 
 def init_db():
-    conn = sqlite3.connect('ai_scores.db')
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS scores (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT,
-            demographic_parity REAL,
-            equal_opportunity REAL,
-            disparate_impact REAL,
-            documentation_practices REAL,
-            auditability REAL,
-            ethical_compliance REAL,
-            explainability REAL,
-            ui_design REAL,
-            decision_doc REAL,
-            graph_html TEXT
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    with sqlite3.connect('ai_scores.db') as conn:
+        c = conn.cursor()
+        c.execute('''
+            CREATE TABLE IF NOT EXISTS scores (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT,
+                demographic_parity REAL,
+                equal_opportunity REAL,
+                disparate_impact REAL,
+                documentation_practices REAL,
+                auditability REAL,
+                ethical_compliance REAL,
+                explainability REAL,
+                ui_design REAL,
+                decision_doc REAL,
+                graph_html TEXT
+            )
+        ''')
+        conn.commit()
 
 @app.route('/')
 def index():
@@ -88,21 +87,20 @@ def calculate():
         graph_html = pio.to_html(fig, full_html=False)
 
         # Save data to the database
-        conn = sqlite3.connect('ai_scores.db')
-        c = conn.cursor()
-        c.execute('''
-            INSERT INTO scores (
+        with sqlite3.connect('ai_scores.db') as conn:
+            c = conn.cursor()
+            c.execute('''
+                INSERT INTO scores (
+                    title, demographic_parity, equal_opportunity, disparate_impact,
+                    documentation_practices, auditability, ethical_compliance,
+                    explainability, ui_design, decision_doc, graph_html
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
                 title, demographic_parity, equal_opportunity, disparate_impact,
                 documentation_practices, auditability, ethical_compliance,
                 explainability, ui_design, decision_doc, graph_html
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (
-            title, demographic_parity, equal_opportunity, disparate_impact,
-            documentation_practices, auditability, ethical_compliance,
-            explainability, ui_design, decision_doc, graph_html
-        ))
-        conn.commit()
-        conn.close()
+            ))
+            conn.commit()
 
         return redirect(url_for('results'))
 
@@ -111,20 +109,18 @@ def calculate():
 
 @app.route('/results')
 def results():
-    conn = sqlite3.connect('ai_scores.db')
-    c = conn.cursor()
-    c.execute('SELECT id, title, graph_html FROM scores')
-    rows = c.fetchall()
-    conn.close()
+    with sqlite3.connect('ai_scores.db') as conn:
+        c = conn.cursor()
+        c.execute('SELECT id, title, graph_html FROM scores')
+        rows = c.fetchall()
     return render_template('results.html', rows=rows)
 
 @app.route('/view/<int:id>')
 def view(id):
-    conn = sqlite3.connect('ai_scores.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM scores WHERE id = ?', (id,))
-    row = c.fetchone()
-    conn.close()
+    with sqlite3.connect('ai_scores.db') as conn:
+        c = conn.cursor()
+        c.execute('SELECT * FROM scores WHERE id = ?', (id,))
+        row = c.fetchone()
     return render_template('view.html', row=row)
 
 if __name__ == '__main__':
